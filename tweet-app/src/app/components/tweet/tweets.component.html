@@ -1,0 +1,39 @@
+<div class="tweet-top">
+    <div class="tweet-image">
+        <img src="{{tweet?.user?.image}}" alt="Profile Pic">
+    </div>
+    <div class="tweet-details">
+        <div class="tweet-info">
+            <p class="tweet-title">{{tweet?.user?.firstName}} {{tweet?.user?.lastName}}  
+                <span class="tweet-handle italic">@{{tweet?.user?.email}}</span>
+                <span class="tweet-date italic">{{tweet?.date | date}}</span>
+            </p>
+            <P class="tweet-text">{{tweet?.tweetContent}}</P>
+        </div>
+        <div class="tweet-actions">
+            <button (click)="likeTweet()" [class.tweet-liked]="tweetLiked" [disabled]="!enableLike">Like</button>
+            <button [disabled]="!enableDelete" (click)="deleteTweet()">Delete</button>
+        </div>
+        <div class="tweet-reply" *ngIf="enableReply">
+            <textarea maxlength="140" placeholder="Enter your reply" [(ngModel)]="reply"></textarea>
+            <button (click)="replyTweet(reply)">Reply</button>
+        </div>
+    </div>
+</div>
+<div class="tweet-bottom" *ngIf="showReplies">
+    <div class="tweet-reply-empty"><b>Replies:</b></div>
+    <div class="tweet-replies">
+        <ng-container *ngFor="let reply of tweet?.replies; let i = index">
+            <div *ngIf="i<indexAllowed" class="tweetReply">
+                <span>
+                   <p class="bold">
+                       {{reply?.user?.firstName}} {{reply?.user?.lastName}}
+                       <i class="tweet-handle">@{{reply?.user?.email}}</i>
+                   </p>
+                   <span>{{reply?.tweetContent}}</span>
+                </span>
+                <span class="italic">{{reply?.date | date}}</span>
+            </div>
+        </ng-container>
+    </div>
+</div>

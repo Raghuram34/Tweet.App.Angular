@@ -1,0 +1,6 @@
+<ng-container *ngFor="let tweet of myTweets; trackBy: trackTweet">
+    <app-tweets [tweet]="tweet"></app-tweets>
+</ng-container>
+<ng-container *ngIf="myTweets.length == 0">
+    <h2>No Tweets Available</h2>
+</ng-container>

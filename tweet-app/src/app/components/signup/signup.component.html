@@ -1,0 +1,46 @@
+<div class="signup-form">
+    <h2 class="form-header center">Sign Up</h2>
+
+    <form class="form-group" [formGroup]="signUpForm" (ngSubmit)="signUpAction()">
+        <div class="form-control">
+            <label for="firstName">First Name</label>
+            <input type="text" id="firstName" placeholder="First Name" formControlName="firstName">
+            <span class="error italic" *ngIf="!signUpForm.controls['firstName'].valid && signUpForm.controls['firstName'].dirty">Enter First Name</span>
+        </div>
+        <div class="form-control">
+            <label for="lastName">Last Name</label>
+            <input type="text" formControlName="lastName" placeholder="Last Name" id="lastName">
+            <span class="error italic" *ngIf="!signUpForm.controls['lastName'].valid && signUpForm.controls['lastName'].dirty">Enter Last name</span>
+        </div>
+        <div class="form-control">
+            <label for="email">E-Mail Id</label>
+            <input type="email" formControlName="email" placeholder="Email ID" id="email">
+            <span class="error italic" *ngIf="!signUpForm.controls['email'].valid && signUpForm.controls['email'].dirty">Enter valid Email</span>
+        </div>
+        <div class="form-control">
+            <label for="password">Password</label>
+            <input type="password" formControlName="password"placeholder="Password" id="password">
+            <span class="error italic" *ngIf="!signUpForm.controls['password'].valid && signUpForm.controls['password'].dirty">Enter valid Password</span>
+        </div>
+        <div class="form-control">
+            <label for="confirm-password">Confirm Password</label>
+            <input type="password" formControlName="confirmPassword" placeholder="Confirm Password" id="confirm-password">
+            <span class="error italic" *ngIf="!signUpForm.controls['email'].valid && signUpForm.controls['email'].dirty">Match the entered Password</span>
+        </div>
+        <div class="form-control">
+            <label for="contactNumber">Contact Number</label>
+            <input type="text" formControlName="contactNumber" placeholder="Contact Number" id="contactNumber">
+            <span class="error italic" *ngIf="!signUpForm.controls['contactNumber'].valid && signUpForm.controls['contactNumber'].dirty">Enter valid Contact Number</span>
+        </div>
+        <div>
+            <input type="file" id="image" multiple="false" formControlName ="image" 
+                (change)="selectFile($event.target)">
+        </div>
+        <div>
+            <span class="error italic" *ngIf="!signUpForm.controls['image'].valid && signUpForm.controls['image'].dirty">Please upload image only</span>
+        </div>
+        <div class="form-control">
+            <button type="submit" [disabled]="!signUpForm.valid">Sign Up</button>
+        </div>
+    </form>
+</div>

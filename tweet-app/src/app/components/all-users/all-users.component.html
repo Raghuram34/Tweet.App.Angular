@@ -1,0 +1,11 @@
+<ng-container *ngFor="let user of allUsers">
+    <div class="user-block">
+        <div class="user-image">
+            <img src="{{user.image}}" alt="">
+        </div>
+        <div class="user-details">
+            <span class="bold">{{user.firstName}} {{user.lastName}}</span>
+            <a href="mailto:{{user.email}}">{{user.email}}</a>
+        </div>
+    </div>
+</ng-container>

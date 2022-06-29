@@ -1,0 +1,120 @@
+:host {
+    margin-bottom: 30px;
+    display: block;
+
+    .tweet-top{
+        box-shadow: 2px 2px 2px 2px #baccd9;
+        margin-bottom: 5px;
+        display: grid;
+        box-sizing: border-box;
+        padding: 5px 20px;
+        grid-template-columns: 20% 80%;
+        border-left: 5px solid #BACCDA;
+    
+        .tweet-info {
+            
+            .tweet-title {
+                font-weight: 700;
+                font-size: 16px;
+    
+                .tweet-handle {
+                    color: #6a7c88;
+                    font-size: 12px;
+                }
+    
+                .tweet-date {
+                    float: right;
+                    font-size: 12px;
+                    font-weight: normal;
+                }
+            }
+    
+            .tweet-text {
+                font-size: 14px;
+            }
+        }
+    
+        img {
+            width: 50px;
+            margin: 0 auto;
+            display: block;
+            margin-top: 25%;
+        }
+    
+        .tweet-actions {
+            padding: 5px;
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(3, 33%);
+            
+            button {
+                border: none;
+                width: auto;
+                cursor: pointer;
+                background: transparent;
+                height: 32px;
+                color: #000;
+    
+                &:hover {
+                    background-color: #1DA1F2;
+                    color: #fff;
+                }
+    
+                &.tweet-liked {
+                    color: #1DA1F2;
+                }
+    
+                &:disabled {
+                    background-color: transparent;
+                    color: grey;
+                }
+            }
+        }
+    
+        .tweet-reply {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 75% 20%;
+            column-gap: 5%;
+           
+            textarea {
+                resize: none;
+                text-indent: 5px;
+            }
+    
+        }
+    }
+    
+    .tweet-bottom {
+        display: grid;
+        grid-template-columns: 20% 80%;
+    
+        .tweet-reply-empty {
+            margin: 0 auto;
+            box-sizing: border-box; 
+        }
+    
+        .tweet-replies {
+            row-gap: 5px;
+    
+            .tweetReply {
+                padding: 5px;
+                box-shadow: 2px 2px 2px 2px #baccd9;
+                display: flex;
+                justify-content: space-between;
+    
+                span {
+                    display: flex;
+                    flex-direction: column;
+                    font-size: 12px;
+                    row-gap: 2px;
+                    align-items: baseline;
+                }
+    
+                .tweet-handle {
+                    color: #6a7c88;
+                }
+            }
+        }
+    }
+}

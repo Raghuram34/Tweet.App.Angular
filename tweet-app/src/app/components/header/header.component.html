@@ -1,0 +1,34 @@
+<div class="tweet-logo">TweetApp</div>
+<div class="tweet-actions">
+    <ul>
+        <li>
+            <a routerLink="/home" aria-label="home">Home</a>
+        </li>
+        <li *ngIf="isLoggedIn">
+            <a routerLink="/home/my-tweets">My Tweets</a>
+        </li>
+        <li>
+            <a routerLink="users/all">All Users</a>
+        </li>
+    </ul>
+</div>
+<div class="tweet-access" *ngIf="!isLoggedIn">
+    <ul>
+        <li>
+            <a routerLink="/user/login" aria-label="login">Login</a>
+        </li>
+        <li>
+            <a routerLink="/user/signup" aria-label="signup">Sign Up</a>
+        </li>
+    </ul>
+</div>
+<div class="tweet-profile" *ngIf="isLoggedIn">
+    <ul>
+        <li>
+            <a class="profile" #profileMenuIcon (click)="toggleProfileMenu()">Profile</a>
+            <ng-container *ngIf="showProfileMenu">
+                <app-profile-menu (window:click)="hideProfileMenuIfOpen($event)"></app-profile-menu>
+            </ng-container>
+        </li>
+    </ul>
+</div>

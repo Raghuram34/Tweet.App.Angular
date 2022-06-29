@@ -1,0 +1,8 @@
+<app-header></app-header>
+<router-outlet></router-outlet>
+<ng-container *ngIf="showOverlay">
+    <div class="overlay">
+        <img src="../assets/loading.gif" alt="">
+    </div>
+</ng-container>
+<app-toast-message></app-toast-message>

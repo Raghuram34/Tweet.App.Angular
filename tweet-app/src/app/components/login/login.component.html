@@ -1,0 +1,19 @@
+<div class="login-form">
+    <h2 class="form-header center">Login</h2>
+    <form class="form-group" #loginForm="ngForm" (ngSubmit)="loginAction(loginForm.value)">
+        <div class="form-control">
+            <label for="email">E-Mail Id</label>
+            <input type="email" name="email" placeholder="Email ID" ngModel required />
+        </div>
+        <div class="form-control">
+            <label for="password">Password</label>
+            <input type="password" name="password" placeholder="Password" required minlength="8" ngModel />
+        </div>
+        <div class="form-control">
+            <button type="submit" [disabled]="!loginForm.valid" value="Login">Login</button>
+        </div>
+    </form>
+</div>
+<div class="center">
+    <a routerLink="/user/forgot-password" aria-label="forgot-password">Forgot Password?</a>
+</div>

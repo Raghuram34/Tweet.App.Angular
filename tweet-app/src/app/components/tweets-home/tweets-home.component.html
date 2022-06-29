@@ -1,0 +1,16 @@
+<section>
+    <div class="profile-image">
+        <img src="{{profileImage}}" alt="Logo">
+    </div>
+    <div class="tweets-sections">
+        <div class="post-tweet">
+            <textarea name="" id="" cols="30" rows="10" #tweetcontent="ngModel"
+                placeholder="Post Your Tweet Here" maxlength="140"
+                [(ngModel)]="tweetContent" (keyup)="validateTweetContent()"></textarea>
+            <button (click)="postTweet()" [disabled]="!validTweet || !isLoggedIn">Post Tweet</button>
+        </div>
+        <div class="tweets-list">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</section>

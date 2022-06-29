@@ -1,0 +1,28 @@
+:host {
+    display: block;
+    row-gap: 20px;
+    width: 100%;
+    margin: 30px auto;
+    max-width: 768px;
+    box-sizing: border-box;
+
+    .user-block {
+        display: grid;
+        grid-template-columns: 20% 80%;
+        column-gap: 10px;
+        border-left: 5px solid #BACCDA;
+        box-shadow: 2px 2px 2px 2px #baccd9;
+        padding: 10px;
+
+        img {
+            width: 50px;
+            display: block;
+            margin: 0 auto;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+        }
+    }
+}

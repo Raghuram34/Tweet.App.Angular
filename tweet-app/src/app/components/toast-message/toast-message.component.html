@@ -1,0 +1,4 @@
+<div class="toast-message" [ngClass]="toastClass" *ngIf="showToast">
+    <span>{{toastMessage}}</span>
+    <button (click)="dismiss()">Dismiss</button>
+</div>
