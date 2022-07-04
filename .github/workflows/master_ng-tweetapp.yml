@@ -19,13 +19,16 @@ jobs:
       - name: Set up Node.js version
         uses: actions/setup-node@v1
         with:
-          node-version: '14.x'
+          node-version: '12.x'
 
       - name: npm install, build, and test
         run: |
           cd tweet-app
           npm install
           npm run build:prod --if-present
+          cd..
+          cd tweet-app-server
+          npm install
       
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
