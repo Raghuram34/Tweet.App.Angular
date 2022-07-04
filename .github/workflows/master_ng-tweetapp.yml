@@ -23,10 +23,6 @@ jobs:
 
       - name: npm install, build, and test
         run: |
-          cd tweet-app
-          npm install
-          npm run build:prod --if-present
-          cd..
           cd tweet-app-server
           npm install
       
