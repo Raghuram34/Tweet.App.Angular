@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   UserAPIPath : "https://localhost:44317/api/user",
   TweetAPIPath: "https://localhost:44351/api/tweet"
+  // UserAPIPath : "https://tweetcore.azurewebsites.net/api/user",
+  // TweetAPIPath: "https://tweetauth.azurewebsites.net/api/tweet"
 };
 
 /*

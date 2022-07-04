@@ -35,9 +35,9 @@ export class SignupComponent implements OnInit {
   }
 
   selectFile(eventTarget: any) {
-    const file = eventTarget.files[0];
+    const file: File = eventTarget.files[0];
     const imageRegex = new RegExp(/^image\//)
-    if(!imageRegex.test(file.type)) {
+    if(!imageRegex.test(file.type) || file.size > 10*1024) {
       this.signUpForm.controls['image'].setValue(null);
       return;
     }

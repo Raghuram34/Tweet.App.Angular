@@ -29,7 +29,7 @@
         </div>
         <div class="form-control">
             <label for="contactNumber">Contact Number</label>
-            <input type="text" formControlName="contactNumber" placeholder="Contact Number" id="contactNumber">
+            <input type="text" formControlName="contactNumber" placeholder="Contact Number" id="contactNumber" maxlength="10">
             <span class="error italic" *ngIf="!signUpForm.controls['contactNumber'].valid && signUpForm.controls['contactNumber'].dirty">Enter valid Contact Number</span>
         </div>
         <div>
@@ -37,7 +37,7 @@
                 (change)="selectFile($event.target)">
         </div>
         <div>
-            <span class="error italic" *ngIf="!signUpForm.controls['image'].valid && signUpForm.controls['image'].dirty">Please upload image only</span>
+            <span class="error italic" *ngIf="!signUpForm.controls['image'].valid && signUpForm.controls['image'].dirty">Please upload image only <=1= 10KB</span>
         </div>
         <div class="form-control">
             <button type="submit" [disabled]="!signUpForm.valid">Sign Up</button>

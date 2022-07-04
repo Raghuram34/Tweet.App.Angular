@@ -19,5 +19,5 @@ COPY --from=client-build /app/dist/tweet-app /app/dist/tweet-app
 COPY tweet-app-server/index.js /app
 
 # Stage 5
-EXPOSE 3030
+EXPOSE 80
 CMD [ "node", "index.js" ]
