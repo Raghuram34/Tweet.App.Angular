@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { ITweet } from 'src/app/models/itweet';
 import { TweetService } from 'src/app/services/tweet.service';
@@ -11,19 +12,24 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class AllTweetsComponent implements OnInit {
 
-  allTweets: ITweet[] = [];
+  @Input() allTweets: ITweet[] = [];
 
-  constructor(private userService: UserService, private tweetService: TweetService) { 
-
-    tweetService.getAllTweets()
-      .pipe(filter(tweets => tweets != null))
-      .subscribe(tweets => { 
-        this.allTweets = tweets; 
-      });
+  constructor(private userService: UserService, 
+    private tweetService: TweetService, 
+    private route: ActivatedRoute) { 
+      this.readTweets();
   }
 
   ngOnInit(): void {
     
+  }
+
+  ngDoCheck() {
+    this.readTweets();
+  }
+
+  readTweets() {
+    this.allTweets = this.route.snapshot.data['tweets'];
   }
 
   trackTweet(index: number, tweet: any) {

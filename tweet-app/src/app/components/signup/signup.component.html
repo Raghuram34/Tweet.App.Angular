@@ -25,7 +25,7 @@
         <div class="form-control">
             <label for="confirm-password">Confirm Password</label>
             <input type="password" formControlName="confirmPassword" placeholder="Confirm Password" id="confirm-password">
-            <span class="error italic" *ngIf="!signUpForm.controls['email'].valid && signUpForm.controls['email'].dirty">Match the entered Password</span>
+            <span class="error italic" *ngIf="!signUpForm.controls['confirmPassword'].valid && signUpForm.controls['confirmPassword'].dirty">Match the entered Password</span>
         </div>
         <div class="form-control">
             <label for="contactNumber">Contact Number</label>

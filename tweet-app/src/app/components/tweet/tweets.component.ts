@@ -65,6 +65,7 @@ export class TweetsComponent implements OnInit {
       .subscribe(
         (response) => {
           this.reply = "";
+          this.tweetService.refreshTweetServices();
         },
         (error) => {
           this.toastMessageService.createToastMessage("Some error occured. Please try again sometime.")

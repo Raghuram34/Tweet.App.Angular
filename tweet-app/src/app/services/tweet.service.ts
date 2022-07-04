@@ -1,5 +1,6 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable, ReplaySubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
@@ -24,7 +25,8 @@ export class TweetService {
   constructor(
     private userService: UserService, 
     private httpClient: HttpClient, 
-    private overlayService: LoadingOverlayService) 
+    private overlayService: LoadingOverlayService,
+    private router: Router) 
   { 
     userService.getCurrentUser().subscribe(user => this.currentUser = user);
     this.sendRequestForAllTweets();
@@ -37,15 +39,20 @@ export class TweetService {
     return this.httpClient.post(url, tweet);
   }
 
-  sendRequestForAllTweets() {
+  listenRequestForAllTweets() {
     const url = `${this.tweetAPIPath}/all`;
-    this.overlayService.loadingOverlayShow();
-    this.httpClient.get<ITweet[]>(url)
-      .pipe(finalize(() => this.overlayService.loadingOverlayHide()))
-      .subscribe(
+    this.overlayService.loadingOverlayShow();  
+    this.sendRequestForAllTweets().subscribe(
       (tweets) => this.allTweets$.next(tweets),
       (error) => console.log(error)
     );
+  }
+
+  sendRequestForAllTweets() {
+    const url = `${this.tweetAPIPath}/all`;
+    this.overlayService.loadingOverlayShow();
+    return this.httpClient.get<ITweet[]>(url)
+      .pipe(finalize(() => this.overlayService.loadingOverlayHide()));
   }
 
   sendRequestForTweetsByUserId(id: any): Observable<ITweet[]> {
@@ -74,7 +81,11 @@ export class TweetService {
 
   refreshTweetServices() {
     this.sendRequestForCurrentUserTweets();
-    this.sendRequestForAllTweets();
+    this.listenRequestForAllTweets();
+    let currentUrl = this.router.url;
+    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.onSameUrlNavigation = 'reload';
+    this.router.navigate([currentUrl]);
   }
 
   sendLikeTweetRequest(tweetId: string | undefined) {

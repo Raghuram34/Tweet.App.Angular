@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IUser } from 'src/app/models/iuser';
 import { ToastMessageService } from 'src/app/services/toast-message.service';
 import { UserService } from 'src/app/services/user.service';
@@ -12,6 +13,7 @@ export class AllUsersComponent implements OnInit {
   allUsers: IUser[] = [];
 
   constructor(private userService: UserService, 
+    private router: Router,
     private toastMessageService: ToastMessageService) {
     userService.sendRequestToGetAllUsers().subscribe(users => {
       this.allUsers = users as IUser[];
@@ -24,4 +26,7 @@ export class AllUsersComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  viewTweetsById(id: any) {
+    this.router.navigate([`view-tweets/${id}`]);
+  }
 }

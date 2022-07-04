@@ -77,7 +77,6 @@ export class UserService {
   }
 
   sendLoginRequest(email: string, password: string): Observable<string> {
-    console.log(email, password);
     const url =  `${this.controllerName}/login?email=${email}&password=${password}`;
     return this.httpClient.get(url,{responseType:'text'});
   }

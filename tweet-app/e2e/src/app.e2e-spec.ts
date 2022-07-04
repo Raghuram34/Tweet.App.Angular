@@ -13,13 +13,6 @@ describe('TweetApp App', () => {
     expect(await page.getTitleText()).toEqual('TweetApp');
   });
 
-  it('should navigate to Home Page', async () => {
-    const ele = element(by.css('app-header a[aria-label=home]'));
-    expect(await ele.getText()).toEqual('Home');
-    await ele.click();
-    expect(await browser.getCurrentUrl()).toEqual(browser.baseUrl+'home');
-  });
-
   it('should navigate to Signup Page', async () => {
     const ele = element(by.css('app-header a[aria-label=signup]'));
     expect(await ele.getText()).toEqual('Sign Up');

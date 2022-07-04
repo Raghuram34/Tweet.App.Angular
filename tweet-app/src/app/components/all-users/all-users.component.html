@@ -7,5 +7,8 @@
             <span class="bold">{{user.firstName}} {{user.lastName}}</span>
             <a href="mailto:{{user.email}}">{{user.email}}</a>
         </div>
-    </div>
+        <div>
+            <button (click)="viewTweetsById(user?.id)">View Tweets</button>
+        </div>
+    </div>  
 </ng-container>
