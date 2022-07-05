@@ -37,7 +37,7 @@
                 (change)="selectFile($event.target)">
         </div>
         <div>
-            <span class="error italic" *ngIf="!signUpForm.controls['image'].valid && signUpForm.controls['image'].dirty">Please upload image only <=1= 10KB</span>
+            <span class="error italic" *ngIf="!signUpForm.controls['image'].valid && signUpForm.controls['image'].dirty">Please upload image only <= 10KB</span>
         </div>
         <div class="form-control">
             <button type="submit" [disabled]="!signUpForm.valid">Sign Up</button>

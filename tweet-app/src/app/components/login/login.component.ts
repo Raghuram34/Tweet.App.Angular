@@ -17,9 +17,14 @@ export class LoginComponent implements OnInit {
   constructor(private userService: UserService, 
     private router: Router,
     private toastMessageService: ToastMessageService,
-    private loadingOverlayService: LoadingOverlayService) { }
+    private loadingOverlayService: LoadingOverlayService) {
+
+    }
 
   ngOnInit(): void {
+    if(this.userService.getCurrentUser().value != null) {
+      this.router.navigate(['']);
+    }
   }
 
   loginAction(loginForm: any) {

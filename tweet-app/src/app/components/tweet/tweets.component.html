@@ -11,17 +11,24 @@
             <P class="tweet-text">{{tweet?.tweetContent}}</P>
         </div>
         <div class="tweet-actions">
-            <button (click)="likeTweet()" [class.tweet-liked]="tweetLiked" [disabled]="!enableLike">Like</button>
+            <button (click)="likeTweet()" [class.tweet-liked]="tweetLiked" [disabled]="!enableLike">Like({{totalLikes}})</button>
             <button [disabled]="!enableDelete" (click)="deleteTweet()">Delete</button>
+            <button *ngIf="totalReplies > 0" (click)="toggleRepliesView()">{{showReplies ? "Hide Replies" : "Show Replies"}}</button>
         </div>
         <div class="tweet-reply" *ngIf="enableReply">
-            <textarea maxlength="140" placeholder="Enter your reply" [(ngModel)]="reply"></textarea>
-            <button (click)="replyTweet(reply)">Reply</button>
+            <textarea maxlength="140" placeholder="Enter your reply" (keyup)="validReply()" [(ngModel)]="reply"></textarea>
+            <button (click)="replyTweet(reply)" [disabled]="!isValidReply">Reply</button>
         </div>
     </div>
 </div>
 <div class="tweet-bottom" *ngIf="showReplies">
-    <div class="tweet-reply-empty"><b>Replies:</b></div>
+    <div class="tweet-reply-empty">
+        <span class="bold">Replies({{totalReplies}}):</span>
+        <span>
+            <a (click)="expand(true)" *ngIf="totalReplies - indexAllowed > 0">More</a>
+            <a (click)="expand(false)" *ngIf="indexAllowed > 5">Less</a>
+        </span>
+    </div>
     <div class="tweet-replies">
         <ng-container *ngFor="let reply of tweet?.replies; let i = index">
             <div *ngIf="i<indexAllowed" class="tweetReply">

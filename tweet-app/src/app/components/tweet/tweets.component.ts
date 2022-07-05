@@ -21,6 +21,9 @@ export class TweetsComponent implements OnInit {
   reply: string = "";
   indexAllowed: number = 5;
   showReplies: boolean = false;
+  isValidReply: boolean = false;
+  totalLikes: number = 0;
+  totalReplies: number = 0;
   
   constructor(private userService: UserService, 
     private tweetService: TweetService,
@@ -39,6 +42,8 @@ export class TweetsComponent implements OnInit {
     this.enableReply = this.currentUser != null;
     this.tweetLiked = this.tweet.likes?.includes(this.currentUser?.id ? this.currentUser.id : "");
     this.showReplies = this.tweet.replies !=null && this.tweet.replies.length > 0;
+    this.totalReplies = this.tweet.replies != null ? this.tweet.replies?.length: 0;
+    this.totalLikes = this.tweet.likes.length;
   }
 
   likeTweet() {
@@ -75,6 +80,20 @@ export class TweetsComponent implements OnInit {
 
   validReply(): boolean {
     var tweetLength = this.reply.trim().length;
-    return tweetLength >= 10 && tweetLength <= 140;
+    this.isValidReply = tweetLength >= 10 && tweetLength <= 140;
+    return this.isValidReply;
+  }
+
+  toggleRepliesView() {
+    this.showReplies = !this.showReplies;
+  }
+
+  expand(flag: boolean) {
+    if(flag) {
+      this.indexAllowed = this.indexAllowed * 2;
+    }
+    else {
+      this.indexAllowed = this.indexAllowed /2;
+    }
   }
 }
