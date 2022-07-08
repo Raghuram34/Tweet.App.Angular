@@ -4,11 +4,13 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpHeaders
+  HttpHeaders,
+  HttpResponse,
+  HttpErrorResponse
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { Observable, throwError, of } from 'rxjs';
 import { UserService } from '../services/user.service';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 
 @Injectable()
 export class InterceptorInterceptor implements HttpInterceptor {
@@ -28,11 +30,25 @@ export class InterceptorInterceptor implements HttpInterceptor {
                                   .set('Authorization', 'Bearer '+this.bearerToken)
                               });
     return next.handle(modifiedRequest)
-            .pipe(catchError(error => {
-              if(error.status == 401) {
-                this.userService.userLogOut();
-              }
-              return throwError(error);
+            .pipe(
+              catchError(error => {
+                debugger
+                if(error.status == 401) {
+                  this.userService.userLogOut();
+                }
+
+                if(error instanceof HttpErrorResponse && this.isSuccess(error.status)) {
+                  return of(new HttpResponse({
+                    status: error.status,
+                    body: error.error.text
+                  }))
+                }
+
+                return throwError(error);
             }));
+  }
+
+  isSuccess(code: number): boolean {
+    return code >= 200 && code < 300;
   }
 }

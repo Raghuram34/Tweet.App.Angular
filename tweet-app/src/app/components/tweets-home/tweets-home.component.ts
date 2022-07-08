@@ -34,7 +34,6 @@ export class TweetsHomeComponent implements OnInit {
   }
 
   postTweet() {
-    console.log(this.tweetContent);
     if(!this.validTweet || !this.isLoggedIn) {
       return;
     }

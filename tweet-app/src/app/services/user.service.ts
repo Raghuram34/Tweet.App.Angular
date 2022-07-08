@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { IUser } from '../models/iuser';
 import { environment } from 'src/environments/environment';
 import { IUserAccount } from '../models/iuseraccount';
+import { finalize } from 'rxjs/operators';
+import { LoadingOverlayService } from './loading-overlay.service';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +19,7 @@ export class UserService {
   private isUserLoggedIn$ = new BehaviorSubject(false);
   private currentUser$: BehaviorSubject<IUserAccount> = new BehaviorSubject<IUserAccount>({});
 
-  constructor(private router: Router, private httpClient: HttpClient) { 
+  constructor(private router: Router, private httpClient: HttpClient, private overlayService: LoadingOverlayService) { 
     if(this.getLocalStorageItem() != null) {
       this.setUserLoggedIn(true);
       try {
@@ -92,8 +94,10 @@ export class UserService {
   }
 
   sendRequestToGetAllUsers() {
+    this.overlayService.loadingOverlayShow();
     const url = `${this.controllerName}`;
     return this.httpClient.get(url)
+            .pipe(finalize(() => this.overlayService.loadingOverlayHide()));
   }
 
   sendRequestForForgotPassword(email: any): Observable<any> {

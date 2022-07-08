@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, ReplaySubject } from 'rxjs';
+import { Observable, pipe, ReplaySubject } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 import { ITweet } from '../models/itweet';
@@ -35,7 +35,6 @@ export class TweetService {
   postTweet(tweet: ITweet): Observable<any> {
     const url = `${this.tweetAPIPath}/add`;
     tweet.user = this.currentUser as IUserAccount;
-    console.log(JSON.stringify(tweet));
     return this.httpClient.post(url, tweet);
   }
 
@@ -57,18 +56,18 @@ export class TweetService {
 
   sendRequestForTweetsByUserId(id: any): Observable<ITweet[]> {
     const url = `${this.tweetAPIPath}/${id}`;
-    return this.httpClient.get<ITweet[]>(url);
+    return this.httpClient.get<ITweet[]>(url)
+            .pipe(finalize(() => this.overlayService.loadingOverlayHide()));
   }
 
   sendRequestForCurrentUserTweets(){
     this.sendRequestForTweetsByUserId(this.currentUser?.id)
-      .pipe(finalize(() => this.overlayService.loadingOverlayHide()))
       .subscribe(tweets => {
-      this.currentUserTweets$.next(tweets);
-    },
-    (error) => {
-      console.log(error);
-    });
+        this.currentUserTweets$.next(tweets);
+      },
+      (error) => {
+        console.log(error);
+      });
   }
 
   getTweetsForCurrentUser(): Observable<ITweet[]> {
@@ -81,19 +80,18 @@ export class TweetService {
 
   refreshTweetServices() {
     this.sendRequestForCurrentUserTweets();
-    this.listenRequestForAllTweets();
     let currentUrl = this.router.url;
-    // this.router.routeReuseStrategy.shouldReuseRoute = () => false;
     this.router.onSameUrlNavigation = 'reload';
     this.router.navigate([currentUrl]);
   }
 
   sendLikeTweetRequest(tweetId: string | undefined) {
+    this.overlayService.loadingOverlayShow();
     const url = `${this.tweetAPIPath}/${this.currentUser.id}/like`;
     this.httpClient.patch(url, JSON.stringify(tweetId), { responseType: 'text'})
+      .pipe(finalize(() => this.overlayService.loadingOverlayHide()))
       .subscribe(response => 
         { 
-          console.log(response);
           this.refreshTweetServices();
         }
     );
@@ -101,10 +99,12 @@ export class TweetService {
 
   sendDeleteTweetRequest(tweetId: any) {
     const url = `${this.tweetAPIPath}/${this.currentUser.id}/delete/${tweetId}`;
+    this.overlayService.loadingOverlayShow();
+
     this.httpClient.delete(url)
+      .pipe(finalize(() => this.overlayService.loadingOverlayHide()))
       .subscribe(response => 
         { 
-          console.log(response);
           this.refreshTweetServices();
         }
     );
@@ -115,7 +115,9 @@ export class TweetService {
       tweetContent: reply,
       user: this.currentUser as IUserAccount
     };
+    this.overlayService.loadingOverlayShow();
     const url = `${this.tweetAPIPath}/${tweetId}/reply`;
-    return this.httpClient.patch(url, tweetReply);
+    return this.httpClient.patch<any>(url, tweetReply)
+            .pipe(finalize(() => this.overlayService.loadingOverlayHide()));
   }
 }
