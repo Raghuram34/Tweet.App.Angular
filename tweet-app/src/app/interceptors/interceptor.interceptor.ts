@@ -32,7 +32,6 @@ export class InterceptorInterceptor implements HttpInterceptor {
     return next.handle(modifiedRequest)
             .pipe(
               catchError(error => {
-                debugger
                 if(error.status == 401) {
                   this.userService.userLogOut();
                 }
